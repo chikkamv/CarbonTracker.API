@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: .  
+      dockerfile: CarbonTracker.API/Dockerfile
+    ports:
+      - "5000:80"
+
+
+  frontend:
+    build:
+      context: .  
+      dockerfile: carbon-tracker-ui/Dockerfile  # Path to the frontend Dockerfile
+    ports:
+      - "80:80"  # frontend on port 80
+    networks:
+      - app-network
+    depends_on:
+      - backend  # frontend starts after backend
+
+networks:
+  app-network:
+    driver: bridge
